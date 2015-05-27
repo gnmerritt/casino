@@ -1,0 +1,7 @@
+flask
+sqlalchemy
+flask-sqlalchemy
+flask-login
+flask-oauthlib
+ipython
+gunicorn
