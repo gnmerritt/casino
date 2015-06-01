@@ -1,3 +1,6 @@
 [submodule "poker"]
 	path = poker
 	url = https://github.com/gnmerritt/poker.git
+[submodule "plumbing"]
+	path = plumbing
+	url = https://github.com/gnmerritt/poker-plumbing.git
