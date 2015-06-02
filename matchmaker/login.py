@@ -1,4 +1,4 @@
-from flask import redirect, url_for, request, jsonify, g
+from flask import redirect, url_for, request, g
 from flask_oauthlib.client import OAuth
 from flask.ext.login import LoginManager, login_required, login_user, logout_user
 
@@ -26,7 +26,7 @@ github = oauth.remote_app(
 
 @app.route('/')
 def index():
-    return redirect(url_for('login'))
+    pass
 
 @app.route('/login')
 def login():
@@ -50,7 +50,7 @@ def authorized():
     # fetch user data via the access token
     me = github.get('user')
     login_user(User.get_or_create(me.data))
-    return jsonify(me.data)
+    return redirect(url_for('index'))
 
 
 @github.tokengetter

@@ -1,22 +1,19 @@
 import datetime
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.login import UserMixin
-from matchmaker import app
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
-db = SQLAlchemy(app)
+from matchmaker import app, db
 
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True)
+    external_id = db.Column(db.Integer, index=True, unique=True)
+    username = db.Column(db.String(80))
     email = db.Column(db.String(120), unique=True)
     registered_on = db.Column('registered_on' , db.DateTime)
 
-    def __init__(self, username, email):
+    def __init__(self, username, email, external_id):
         self.username = username
         self.email = email
         self.registered_on = datetime.datetime.utcnow()
+        self.external_id = external_id
 
     def is_authenticated(self):
         return True
@@ -36,14 +33,15 @@ class User(db.Model):
 
     @classmethod
     def get_or_create(cls, data):
-        username = data.get('login', None)
-        existing = db.session.query(User).filter_by(username=username).first()
+        external_id = data.get('id', None)
+        existing = db.session.query(User).filter_by(external_id=external_id).first()
         if existing is not None:
             return existing
         email = data.get('email', None)
-        if email is None:
+        username = data.get('login', None)
+        if email is None or username is None:
             return None
-        user = User(username=username, email=email)
+        user = User(username=username, email=email, external_id=external_id)
         user.write()
         return user
 
