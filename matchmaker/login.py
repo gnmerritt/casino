@@ -1,7 +1,13 @@
 from flask import redirect, url_for, session, request, jsonify
 from flask_oauthlib.client import OAuth
-from matchmaker import app
+from flask.ext.login import LoginManager, login_required, login_user, logout_user
 
+from matchmaker import app
+from models import User
+
+# Wire everything up
+login_manager = LoginManager()
+login_manager.init_app(app)
 oauth = OAuth(app)
 
 # Casino-dev
@@ -25,17 +31,16 @@ def index():
         return jsonify(me.data)
     return redirect(url_for('login'))
 
-
 @app.route('/login')
 def login():
     return github.authorize(callback=url_for('authorized', _external=True))
 
-
 @app.route('/logout')
+@login_required
 def logout():
     session.pop('github_token', None)
+    logout_user()
     return redirect(url_for('index'))
-
 
 @app.route('/login/authorized')
 def authorized():
@@ -47,9 +52,15 @@ def authorized():
         )
     session['github_token'] = (resp['access_token'], '')
     me = github.get('user')
+    login_user(User.get_or_create(me.data))
     return jsonify(me.data)
 
 
 @github.tokengetter
 def get_github_oauth_token():
     return session.get('github_token')
+
+
+@login_manager.user_loader
+def load_user_from_session(id):
+    return User.query.get(int(id))
