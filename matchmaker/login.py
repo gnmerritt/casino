@@ -5,6 +5,7 @@ from flask.ext.login import LoginManager, login_required, login_user, logout_use
 from matchmaker import app
 from models import User
 
+
 # Wire everything up
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -23,10 +24,6 @@ github = oauth.remote_app(
     authorize_url='https://github.com/login/oauth/authorize'
 )
 
-
-@app.route('/')
-def index():
-    pass
 
 @app.route('/login')
 def login():

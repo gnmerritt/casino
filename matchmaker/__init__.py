@@ -9,3 +9,4 @@ db = SQLAlchemy(app)
 
 import matchmaker.models
 import matchmaker.login
+import matchmaker.views
