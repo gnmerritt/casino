@@ -7,6 +7,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 
 db = SQLAlchemy(app)
 
-import matchmaker.models
-import matchmaker.login
-import matchmaker.views
+import models
+import login
+import views
+import api

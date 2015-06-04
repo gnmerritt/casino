@@ -3,7 +3,7 @@ from flask_oauthlib.client import OAuth
 from flask.ext.login import LoginManager, login_required, login_user, logout_user
 
 from matchmaker import app
-from models import User
+from models import User, BotIdentity
 
 
 # Wire everything up
@@ -58,3 +58,14 @@ def get_github_oauth_token():
 @login_manager.user_loader
 def load_user_from_session(id):
     return User.query.get(int(id))
+
+
+@login_manager.request_loader
+def load_user_from_bot_key(request):
+    """key based authentication for the API"""
+    bot_key = request.args.get('key')
+    bot = BotIdentity.query.filter_by(key=bot_key).first()
+    if bot:
+        return bot.get_user()
+
+    return None
