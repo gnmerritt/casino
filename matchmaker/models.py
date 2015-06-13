@@ -106,8 +106,8 @@ class Match(db.Model):
 class Player(db.Model):
     """A player is a bot at a poker table"""
     id = db.Column(db.Integer, primary_key=True)
-    bot = db.Column(db.Integer, db.ForeignKey("bot_identity.id"))
-    match = db.Column(db.Integer, db.ForeignKey("match.id"))
+    bot = db.Column(db.Integer, db.ForeignKey("bot_identity.id"), nullable=False)
+    match = db.Column(db.Integer, db.ForeignKey("match.id"), nullable=False)
 
     def __init__(self, bot, match):
         self.bot = bot
