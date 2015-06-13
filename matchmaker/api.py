@@ -1,15 +1,18 @@
 from flask import Response
 from flask.ext.login import login_required
 
-from matchmaker import app
+from matchmaker import app, db
+import matches
+import util
 
 
-@app.route('/api/join')
+@app.route('/api/matches')
 @login_required
-def find_match():
-    return Response("find match authenticated")
+def open_matches():
+    open = matches.OpenMatches(db)
+    return util.paged_json(open.active())
 
-@app.route('/api/status')
+@app.route('/api/matches/all')
 @login_required
-def join_match():
-    return Response("join_match authenticated")
+def all_matches():
+    return Response("TODO")

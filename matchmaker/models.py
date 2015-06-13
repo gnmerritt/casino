@@ -1,7 +1,7 @@
 import uuid
 import datetime
 
-from matchmaker import app, db
+from matchmaker import db
 
 
 class User(db.Model):
@@ -89,10 +89,12 @@ class Match(db.Model):
     guid = db.Column(db.String(36), index=True)
     started = db.Column(db.DateTime, nullable=False)
     finished = db.Column(db.DateTime)
+    active = db.Column(db.Boolean)
 
     def __init__(self):
-        self.finished = str(uuid.uuid4())
+        self.guid = str(uuid.uuid4())
         self.started = datetime.datetime.utcnow()
+        self.active = False
 
     def finish(self):
         self.finished = datetime.datetime.utcnow()
