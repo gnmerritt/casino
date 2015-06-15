@@ -10,6 +10,16 @@ class OpenMatches(object):
         return [serialize(m) for m in self.matches]
 
 
+class NewMatch(object):
+    def create(self, db, active=True):
+        self.match = Match()
+        self.match.active = active
+        db.session.add(self.match)
+        db.session.commit()
+
+    def guid(self):
+        return self.match.guid
+
 class MatchJoiner(object):
     MAX_PLAYERS = 2 # hardcoded for meow
 
