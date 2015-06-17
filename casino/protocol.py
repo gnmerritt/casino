@@ -22,11 +22,9 @@ class CommandHandler(object):
             command, _, args = line[1:].partition(" ")
             args = args.split(None)
             getattr(self, 'fx_{}'.format(command)).handle(self, args)
-        except handlers.LoseConnectionException as lce:
-            self.parent.closeBecause(lce.message)
         except:
+            log.msg("generic error after handle")
             pass
-
 
 
 class PokerProtocol(basic.LineReceiver):
@@ -34,7 +32,6 @@ class PokerProtocol(basic.LineReceiver):
     delimiter = "\n"
 
     def connectionMade(self):
-        log.msg("Connection made!")
         self.authenticated = False
         self.non_auth_lines = 0
         self.handler = CommandHandler(self)
@@ -55,4 +52,4 @@ class PokerProtocol(basic.LineReceiver):
 
     def closeBecause(self, reason):
         self.sendLine('!! CLOSING CONNECTION BECAUSE "{}"'.format(reason))
-        self.loseConnection()
+        self.transport.loseConnection()
