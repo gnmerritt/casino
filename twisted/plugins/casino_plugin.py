@@ -1,22 +1,17 @@
 from zope.interface import implements
-
-from twisted.python import usage
 from twisted.plugin import IPlugin
 from twisted.application import internet, service
-from twisted.python import log
+from twisted.python import usage
 
-from factory import PokerFactory
-
-
-class PokerService(service.Service):
-    def startService(self):
-        log.msg("PokerService service started")
+from casino.factory import PokerFactory
+from casino.services import PokerService
 
 
 class Options(usage.Options):
     optParameters = [
         ['port', 'p', 5154, 'The port number to listen on.'],
         ['iface', None, 'localhost', 'The interface to listen on.'],
+        ['config', None, 'config.ini', 'Configuration file'],
     ]
 
 
