@@ -110,8 +110,8 @@ class Player(db.Model):
     match = db.Column(db.Integer, db.ForeignKey("match.id"), nullable=False)
 
     def __init__(self, bot, match):
-        self.bot = bot
-        self.match = match
+        self.bot = bot.id
+        self.match = match.id
 
 
 class MatchEvent(db.Model):

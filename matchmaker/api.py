@@ -39,3 +39,4 @@ def player_joined(game_key):
     except Exception as e:
         print "Error joining match: {}".format(e)
         abort(404)
+    return jsonify(**{"success": True})
