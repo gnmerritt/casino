@@ -6,6 +6,8 @@ from twisted.python import usage
 from casino.factory import PokerFactory
 from casino.services import PokerService
 
+import casino.paths
+
 
 class Options(usage.Options):
     optParameters = [
@@ -33,7 +35,7 @@ class PokerServiceMaker(object):
                                          interface=options['iface'])
 
         tcp_service.setServiceParent(top_service)
-
+        casino.paths.fix_paths()
         return top_service
 
 

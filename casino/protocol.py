@@ -24,7 +24,7 @@ class CommandHandler(object):
             getattr(self, 'fx_{}'.format(command)).handle(self, args)
         except:
             log.msg("generic error after handle")
-            pass
+            log.err()
 
 
 class PokerProtocol(basic.LineReceiver):
@@ -43,12 +43,18 @@ class PokerProtocol(basic.LineReceiver):
         log.msg("Got line :: {}".format(line))
         self.handler.handle(line)
         if self.authenticated:
-            pass # TODO: send line to arena
+            self.factory.bot_said(self, line)
         else:
             self.sendLine('!! All input is ignored until you log in.')
             self.non_auth_lines += 1
             if self.non_auth_lines > self.SPAM_LIMIT:
                 self.closeBecause("You need to log in")
+
+    def login_success(self, match, bot):
+        self.authenticated = True
+        self.game = match
+        self.bot = bot
+        self.factory.bot_said(self, "")
 
     def closeBecause(self, reason):
         self.sendLine('!! CLOSING CONNECTION BECAUSE "{}"'.format(reason))
