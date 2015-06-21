@@ -13,15 +13,21 @@ class LoginHandler(object):
         self.game = game
         self.bot = bot
 
-        def failed(ignored):
-            self.handler.parent.closeBecause("login failed")
+        def failed(ignored, reason="login failed"):
+            self.handler.parent.closeBecause(reason)
 
         def http_succeeded(response):
-            if response.code != 200:
-                failed(response)
-            else:
+            if response.code == 200:
                 log.msg("login succeeded")
                 self.handler.parent.authenticated = True
+            elif response.code == 401:
+                failed(response, "Invalid bot key")
+            elif response.code == 404:
+                failed(response, "Invalid game")
+            elif response.code == 410:
+                failed(response, "Game is full")
+            else:
+                failed(response)
 
         # TODO: move this to a config file
         url = 'http://localhost:5000/api/internal/join/{}?key={}'\

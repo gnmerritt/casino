@@ -28,13 +28,14 @@ class MatchJoiner(object):
         self.bot = BotIdentity.query.filter_by(key=bot).first()
 
     def join(self, db):
-        if self.match.players() >= self.MAX_PLAYERS:
-            raise Exception("Too many players")
         if self.bot is None:
-            raise Exception("Invalid bot key")
+            return 401, "Invalid bot key"
         if self.match is None:
-            raise Exception("Invalid match key")
+            return 404, "Invalid match key"
+        if self.match.players() >= self.MAX_PLAYERS:
+            return 410, "Too many players"
 
         player = Player(self.bot, self.match)
         db.session.add(player)
         db.session.commit()
+        return 200, "Joined"

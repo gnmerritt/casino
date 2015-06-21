@@ -33,10 +33,6 @@ def new_match():
 @app.route('/api/internal/join/<game_key>', methods=['POST'])
 def player_joined(game_key):
     bot_key = request.args.get('key')
-    try:
-        joiner = matches.MatchJoiner(game_key, bot_key)
-        joiner.join(db)
-    except Exception as e:
-        print "Error joining match: {}".format(e)
-        abort(404)
-    return jsonify(**{"success": True})
+    joiner = matches.MatchJoiner(game_key, bot_key)
+    code, message = joiner.join(db)
+    return jsonify(status=code, message=message), code
