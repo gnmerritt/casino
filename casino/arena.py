@@ -27,9 +27,12 @@ class ArenaWrapper(object):
     def __init__(self, match):
         self.match = match
 
-    def tell(self, bot, line):
+    def bot_said(self, bot, line):
         log.msg("{b}@{m} :: {l}".format(b=bot, m=self.match, l=line))
-        self.match.tell_bot(bot, [line])
+        try:
+            self.match.bot_said(bot, line)
+        except:
+            log.err()
 
     def add_bot(self, bot, bot_connection):
         log.msg("adding bot {}".format(bot))

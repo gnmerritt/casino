@@ -18,6 +18,6 @@ class PokerFactory(ServerFactory):
         if match:
             match.add_bot(bot, protocol) # usually a no-op
             if line:
-                match.tell(bot, line)
+                match.bot_said(bot, line)
         else:
             protocol.closeBecause("Game has ended")
