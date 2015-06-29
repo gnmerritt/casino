@@ -54,7 +54,7 @@ class PokerProtocol(basic.LineReceiver):
         self.authenticated = True
         self.game = match
         self.bot = bot
-        self.factory.bot_said(self, "")
+        self.factory.bot_said(self, "!joining")
 
     def closeBecause(self, reason):
         self.sendLine('!! CLOSING CONNECTION BECAUSE "{}"'.format(reason))

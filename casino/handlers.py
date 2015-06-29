@@ -16,7 +16,10 @@ class LoginHandler(object):
         def http_succeeded(response):
             if response.code == 200:
                 log.msg("login succeeded")
-                handler.parent.login_success(self.game, self.bot)
+                try:
+                    handler.parent.login_success(game, bot)
+                except:
+                    log.err()
             elif response.code == 401:
                 failed(response, "Invalid bot key")
             elif response.code == 404:
