@@ -17,8 +17,15 @@ class ArenaHolder(object):
         else:
             return ArenaWrapper(self.__start_match(match_key))
 
+    def cleanup(self, key):
+        del self.matches[key]
+        self.ended[key] = True
+
     def __start_match(self, key):
+        def cleanup(args):
+            self.cleanup(key)
         match = net_arena.TwistedNLHEArena()
+        match.after_match.addBoth(cleanup)
         self.matches[key] = match
         return match
 
@@ -35,7 +42,6 @@ class ArenaWrapper(object):
             log.err()
 
     def add_bot(self, bot, bot_connection):
-        log.msg("adding bot {}".format(bot))
         try:
             self.match.add_bot(bot, bot_connection)
         except:
