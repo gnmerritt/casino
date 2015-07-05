@@ -1,0 +1,30 @@
+{
+  "name": "poker-casino",
+  "version": "1.0.0",
+  "description": "Let your robot play poker so it doesn't get bored",
+  "main": "",
+  "dependencies": {
+    "brunch": "~1.7.18",
+    "clean-css-brunch": "~1.7.1",
+    "css-brunch": "~1.7.0",
+    "javascript-brunch": "~1.7.1",
+    "ngmin-uglify-js-brunch": "~1.7.13",
+    "less-brunch": "~1.7.2"
+  },
+  "devDependencies": {
+    "auto-reload-brunch": "~1.7.5"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/gnmerritt/casino.git"
+  },
+  "author": "Nathan Merritt <gnm@the-merritts.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gnmerritt/casino/issues"
+  },
+  "homepage": "https://casino.gnmerritt.net"
+}

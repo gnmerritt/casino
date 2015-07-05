@@ -60,3 +60,8 @@ target/
 twisted/plugins/dropin.cache
 
 *.db
+
+# brunch/bower and build files
+node_modules/
+bower_components/
+matchmaker/static/
