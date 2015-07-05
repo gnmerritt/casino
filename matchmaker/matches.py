@@ -35,7 +35,23 @@ class MatchJoiner(object):
         if self.match.players() >= self.MAX_PLAYERS:
             return 410, "Too many players"
 
+        if self.match.players() + 1 >= self.MAX_PLAYERS:
+            self.match.active = False
+            db.session.add(self.match)
+
         player = Player(self.bot, self.match)
         db.session.add(player)
         db.session.commit()
         return 200, "Joined"
+
+
+class MatchCreatorJob(object):
+    def __init__(self, db):
+        self.db = db
+
+    def run(self):
+        matches = OpenMatches(self.db)
+        if len(matches.matches) == 0:
+            match = NewMatch()
+            match.create(self.db)
+            return match.guid()
