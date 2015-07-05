@@ -6,8 +6,12 @@ class OpenMatches(object):
     def __init__(self, db):
         self.matches = Match.query.filter_by(active=True).all()
 
-    def active(self):
-        return [serialize(m) for m in self.matches]
+    def active(self, config):
+        connection_info = {
+            'host': config.get("CASINO_HOST", None),
+            'port': config.get("CASINO_PORT", None),
+        }
+        return [serialize(m, extras=connection_info) for m in self.matches]
 
 
 class NewMatch(object):
@@ -19,6 +23,7 @@ class NewMatch(object):
 
     def guid(self):
         return self.match.guid
+
 
 class MatchJoiner(object):
     MAX_PLAYERS = 2 # hardcoded for meow

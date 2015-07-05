@@ -1,4 +1,4 @@
-from flask import request, abort, jsonify
+from flask import request, jsonify
 from flask.ext.login import login_required
 
 from matchmaker import app, db
@@ -14,7 +14,7 @@ import util
 @login_required
 def open_matches():
     open = matches.OpenMatches(db)
-    return util.paged_json(open.active())
+    return util.paged_json(open.active(app.config))
 
 
 ##
@@ -36,3 +36,8 @@ def player_joined(game_key):
     joiner = matches.MatchJoiner(game_key, bot_key)
     code, message = joiner.join(db)
     return jsonify(status=code, message=message), code
+
+
+@app.route('/api/internal/finished/<game_key>', methods=['POST'])
+def game_finished(game_key):
+    pass

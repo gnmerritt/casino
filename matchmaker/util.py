@@ -1,12 +1,16 @@
 from flask import jsonify
 from sqlalchemy.orm import class_mapper
 
-def serialize(model):
+def serialize(model, extras={}):
   """Transforms a model into a dictionary which can be dumped to JSON."""
   # first we get the names of all the columns on your model
   columns = [c.key for c in class_mapper(model.__class__).columns]
   # then we return their values in a dict
-  return dict((c, getattr(model, c)) for c in columns)
+  values = dict((c, getattr(model, c)) for c in columns)
+  if extras:
+    for k, v in extras.items():
+      values[k] = v
+  return values
 
 
 def paged_json(data, pagination=None):
