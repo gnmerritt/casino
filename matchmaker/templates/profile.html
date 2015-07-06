@@ -1,7 +1,42 @@
 {% extends "layout.html" %}
-{% block title %}{% current_user.username %}{% endblock %}
+{% block title %}{{ current_user.username }}{% endblock %}
 {% block content %}
   <h1>Profile</h1>
-  <p class="important">
-    Your profile page
+  <h2>Your bots</h2>
+
+  {% for bot in p.bots %}
+  <h4>{{ bot.name }}</h4>
+  <table class="table table-rounded table-bordered">
+    <tr><td>GUID</td><td>Public, identifies your bot to others</td><td>{{ bot.guid }}</td></tr>
+    <tr><td>Key</td><td>Secret, used to log in to games</td><td>{{ bot.key }}</td></tr>
+  </table>
+  {% else %}
+  <script type="text/javascript">
+    window.makeBot = function() {
+      var name = $("#botName").val();
+      if (!name) return;
+      $.ajax({
+        url: "/api/bots/" + encodeURIComponent(name),
+        type: "POST",
+      }).done(function() {
+        window.location.reload();
+      });
+    };
+  </script>
+  <h3>Create a new bot identity</h3>
+  <div class="input-group">
+    <input type="text" class="form-control" id="botName" placeholder="Bot name">
+    <span class="input-group-btn">
+      <button class="btn btn-default" type="button" onclick="makeBot()">Get credentials</button>
+    </span>
+  </div><!-- /input-group -->
+  {% endfor %}
+
+  <h2>Recent games</h2>
+  <ul class="list-group">
+    {% for game in p.games %}
+    <li></li>
+    {% endfor %}
+  </ul>
+
 {% endblock %}

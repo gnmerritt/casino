@@ -1,9 +1,10 @@
 from flask import request, jsonify
-from flask.ext.login import login_required
+from flask.ext.login import login_required, current_user
 
 from matchmaker import app, db
 import matches
 import util
+import profile
 
 
 ##
@@ -16,6 +17,15 @@ def open_matches():
     open = matches.OpenMatches(db)
     return util.paged_json(open.active(app.config))
 
+@app.route('/api/bots/<name>', methods=['POST'])
+@login_required
+def new_bot(name):
+    creator = profile.BotMaker(current_user, name)
+    bot = creator.create(db)
+    return jsonify(**{
+        "success": True,
+        "bot": bot,
+    })
 
 ##
 ## Internal API
