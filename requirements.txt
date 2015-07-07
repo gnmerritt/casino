@@ -8,3 +8,4 @@ gunicorn
 twisted
 pyOpenSSL
 service_identity
+psycopg2
