@@ -6,7 +6,7 @@
 
   {% for bot in p.bots %}
   <h4>{{ bot.name }}</h4>
-  <table class="table table-rounded table-bordered">
+  <table class="table table-striped table-bordered">
     <tr><td>GUID</td><td>Public, identifies your bot to others</td><td>{{ bot.guid }}</td></tr>
     <tr><td>Key</td><td>Secret, used to log in to games</td><td>{{ bot.key }}</td></tr>
   </table>

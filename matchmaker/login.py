@@ -23,7 +23,10 @@ github = oauth.remote_app(
 
 @app.route('/login')
 def login():
-    return github.authorize(callback=url_for('authorized', _external=True))
+    return github.authorize(
+        callback=url_for('authorized', _external=True,
+                         _scheme=app.config.get("PREFERRED_URL_SCHEME"))
+    )
 
 @app.route('/logout')
 @login_required
