@@ -22,18 +22,6 @@
     </div> <!-- /panel-body -->
   </div>
   {% else %}
-  <script type="text/javascript">
-    window.makeBot = function() {
-      var name = $("#botName").val();
-      if (!name) return;
-      $.ajax({
-        url: "/api/bots/" + encodeURIComponent(name),
-        type: "POST",
-      }).done(function() {
-        window.location.reload();
-      });
-    };
-  </script>
   <div class="jumbotron">
     <h2>First up, create a new bot identity:</h2>
     <p>This will allow you to connect your poker AI to the server and

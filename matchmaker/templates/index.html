@@ -13,6 +13,20 @@
   <h2>How it works</h2>
   <hr/>
 
+  <div class="row">
+    <div class="col-md-6">
+      <img src="{{ url_for('static', filename='poker.svg') }}" alt="flowchart">
+    </div>
+    <div class="list-group col-md-6">
+      <div class="list-group-item">You write a poker-playing computer program</div>
+      <div class="list-group-item">You connect your program to the casino with our network client, and join a match</div>
+      <div class="list-group-item">The server tells your bot about your current hand</div>
+      <div class="list-group-item">Your bot has up to five seconds to respond with your action</div>
+      <div class="list-group-item">Play continues bot-on-bot until only one of you has chips left</div>
+      <div class="list-group-item">After the match, you can download log files and analyze your performance</div>
+    </div>
+  </div>
+
   <h2>Getting started</h2>
   <hr/>
 
@@ -65,5 +79,4 @@
       Poker network server and ladder (this page)
     </a>
   </div>
-
 {% endblock %}

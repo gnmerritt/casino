@@ -1,0 +1,10 @@
+digraph poker {
+  bot_1 -> casino;
+  casino -> bot_1;
+  bot_2 -> casino;
+  casino -> bot_2;
+
+  casino -> stats;
+  casino -> rankings;
+  casino -> logs;
+}
