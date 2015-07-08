@@ -32,7 +32,7 @@
               {% if current_user.is_authenticated() %}
               <a href="{{ url_for('profile') }}">Profile</a>
               {% else %}
-              <button type="button" class="btn btn-default navbar-btn">Log in with GitHub</button>
+              <a href="login">Log in with GitHub</a>
               {% endif %}
             </li>
           </ul>
