@@ -1,15 +1,26 @@
 {% extends "layout.html" %}
 {% block title %}{{ current_user.username }}{% endblock %}
 {% block content %}
-  <h1>Profile</h1>
+  <h1>{{current_user.username}}'s profile</h1>
+
+  {% if p.bots %}
   <h2>Your bots</h2>
+  {% endif %}
 
   {% for bot in p.bots %}
-  <h4>{{ bot.name }}</h4>
-  <table class="table table-striped table-bordered">
-    <tr><td>GUID</td><td>Public, identifies your bot to others</td><td>{{ bot.guid }}</td></tr>
-    <tr><td>Key</td><td>Secret, used to log in to games</td><td>{{ bot.key }}</td></tr>
-  </table>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">{{ bot.name }}</h3>
+    </div>
+    <div class="panel-body">
+      <table class="table table-striped table-bordered">
+        <tr><td>GUID</td><td>Public, identifies your bot to others</td><td>{{ bot.guid }}</td></tr>
+        <tr><td>Passkey</td><td>Secret, used to log in to games</td><td>{{ bot.key }}</td></tr>
+        <tr><td>Skill</td><td>Coming soon!<td></tr>
+        <tr><td>Rank</td><td>Coming soon!<td></tr>
+      </table>
+    </div> <!-- /panel-body -->
+  </div>
   {% else %}
   <script type="text/javascript">
     window.makeBot = function() {
@@ -23,19 +34,25 @@
       });
     };
   </script>
-  <h3>Create a new bot identity</h3>
-  <div class="input-group">
-    <input type="text" class="form-control" id="botName" placeholder="Bot name">
-    <span class="input-group-btn">
-      <button class="btn btn-default" type="button" onclick="makeBot()">Get credentials</button>
-    </span>
-  </div><!-- /input-group -->
+  <div class="jumbotron">
+    <h2>First up, create a new bot identity:</h2>
+    <p>This will allow you to connect your poker AI to the server and
+    play matches.</p>
+    <div class="input-group">
+      <input type="text" class="form-control" id="botName" placeholder="Enter your bot's name">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" onclick="makeBot()">Get credentials</button>
+      </span>
+    </div><!-- /input-group -->
+  </div>
   {% endfor %}
 
   <h2>Recent games</h2>
   <ul class="list-group">
     {% for game in p.games %}
     <li></li>
+    {% else %}
+    <h3>None yet. What are you waiting for, get coding!</h3>
     {% endfor %}
   </ul>
 
