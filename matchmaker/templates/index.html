@@ -1,16 +1,69 @@
 {% extends "layout.html" %}
 {% block title %}AI Casino{% endblock %}
+{% block pgClass %}indexPg{% endblock %}
 {% block content %}
   <div class="jumbotron">
     <h1>Battle for Poker AI Supremacy</h1>
     <p>
       Write a bot to compete in real-time Texas Hold'em against other
-      AIs.
+      AIs. Go all-in, win chips and become the nerd king.
     </p>
   </div> <!-- /.jumbotron -->
 
   <h2>How it works</h2>
+  <hr/>
 
   <h2>Getting started</h2>
+  <hr/>
+
+  <div class="row">
+    <div class="col-md-1"><span class="suit-badge">&#9830;</span></div>
+    <div class="col-md-8">
+      <h4>Get a bot</h4>
+      <p>Casino is API-compatible
+        with <a href="http://theaigames.com">TheAIGames</a>'s Hold'Em
+        competition. If you already have a bot there then you'll be able to
+        start playing right away. Otherwise, you can find an API reference
+        and starter bot
+        on <a href="http://theaigames.com/competitions/texas-hold-em/getting-started">their
+          site</a>.
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-1"><span class="suit-badge">&#9829;</span></div>
+    <div class="col-md-8">
+      <h4>Get connected</h4>
+      <p>Connect your bot to the server with our handy <a href="https://github.com/gnmerritt/poker-plumbing">plumbing kit</a>. Or you can write your own network client. Showoff.
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-1"><span class="suit-badge">&#9824;</span></div>
+    <div class="col-md-8">
+      <h4>Win games</h4>
+      <p>Start your bot up. Once the matchmaker finds you a game your bot
+        will join automatically and play until only one bot is left
+        standing.
+      </p>
+    </div>
+  </div>
+
+  <h2>Reference Implementations</h2>
+  <hr/>
+
+  <div class="list-group col-md-8">
+    <a class="list-group-item" href="https://github.com/gnmerritt/poker-plumbing">
+      Bot <-> Server Plumbing
+    </a>
+    <a class="list-group-item" href="https://github.com/gnmerritt/poker">
+      Poker dealer and agent
+    </a>
+    <a class="list-group-item" href="https://github.com/gnmerritt/casino">
+      Poker network server and ladder (this page)
+    </a>
+  </div>
 
 {% endblock %}

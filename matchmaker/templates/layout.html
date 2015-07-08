@@ -16,6 +16,7 @@
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">Casino</div>
+        <p class="navbar-text alpha">(ALPHA)</p>
 
         <p class="navbar-text">Because computers like gambling too</p>
 
@@ -31,15 +32,15 @@
               {% if current_user.is_authenticated() %}
               <a href="{{ url_for('profile') }}">Profile</a>
               {% else %}
-              <button type="button" class="btn btn-default navbar-btn">Log in</button>
+              <button type="button" class="btn btn-default navbar-btn">Log in with GitHub</button>
               {% endif %}
             </li>
           </ul>
       </div> <!-- /.container-fluid -->
     </nav>
 
-    <div class="container container-fluid">
-      <div id="content" class="row">{% block content %}{% endblock %}</div>
+    <div class="container container-fluid {% block pgClass %}{% endblock %}">
+      <div id="content">{% block content %}{% endblock %}</div>
     </div>
   </body>
 </html>
