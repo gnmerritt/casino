@@ -4,6 +4,7 @@ exports.config =
     wrapper: false
   paths:
     public: 'matchmaker/static/'
+    watched: ['matchmaker/webapp/']
   files:
     javascripts:
       joinTo:
