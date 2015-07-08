@@ -46,7 +46,8 @@ def authorized():
     # fetch user data via the access token
     me = github.get('user')
     login_user(User.get_or_create(me.data))
-    return redirect(url_for('index'))
+    return redirect(url_for('profile', _external=True,
+                            _scheme=app.config.get("PREFERRED_URL_SCHEME")))
 
 
 @github.tokengetter
