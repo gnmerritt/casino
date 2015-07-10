@@ -15,7 +15,11 @@
   <body role="document">
     <nav class="navbar navbar-default">
       <div class="container-fluid">
-        <div class="navbar-header">Casino</div>
+        <div class="navbar-header">
+          <div class="navbar-brand">
+            &#127137; &#127197; Robo Casino &#127189; &#127198;
+          </div>
+        </div>
         <p class="navbar-text alpha">(ALPHA)</p>
 
         <p class="navbar-text">Because computers like gambling too</p>
@@ -32,7 +36,7 @@
               {% if current_user.is_authenticated() %}
               <a href="{{ url_for('profile') }}">Profile</a>
               {% else %}
-              <a href="login">Log in with GitHub</a>
+              <a href="login">Join or Log in via GitHub</a>
               {% endif %}
             </li>
           </ul>

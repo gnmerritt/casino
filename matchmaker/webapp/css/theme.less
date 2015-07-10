@@ -1,11 +1,21 @@
 .navbar-default {
     background-color: rgb(255,152,0);
 
-    .navbar-text, .navbar-nav li > a {
+    .navbar-text, .navbar-nav li > a, .navbar-brand {
         color: black;
     }
     .navbar-text.alpha {
         color: red;
         font-weight: bold;
+    }
+}
+
+.btn-primary {
+    background-color: #ff9800;
+    border-color: darken(#ff9800, 20%);
+
+    &:hover {
+        background-color: lighten(#ff9800, 20%);
+        border-color: darken(#ff9800, 20%);
     }
 }
