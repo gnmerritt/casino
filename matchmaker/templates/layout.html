@@ -8,8 +8,6 @@
     {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='vendor.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
-    <script src="{{ url_for('static', filename='vendor.js') }}"></script>
-    <script src="{{ url_for('static', filename='app.js') }}"></script>
     {% endblock %}
   </head>
   <body role="document">
@@ -55,5 +53,7 @@
       ga('create', 'UA-43468545-3', 'auto');
       ga('send', 'pageview');
     </script>
+    <script src="{{ url_for('static', filename='vendor.js') }}"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
   </body>
 </html>
