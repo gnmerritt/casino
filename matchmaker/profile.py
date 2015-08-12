@@ -1,4 +1,4 @@
-from models import Player, BotIdentity
+from models import BotIdentity
 from util import serialize
 
 

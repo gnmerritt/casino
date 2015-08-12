@@ -1,3 +1,5 @@
+import json
+import requests
 from twisted.python import log
 
 from poker.arena import net_arena
@@ -17,15 +19,20 @@ class ArenaHolder(object):
         else:
             return ArenaWrapper(self.__start_match(match_key))
 
-    def cleanup(self, key):
+    def cleanup(self, results, key):
+        self.post_results(results, key)
         del self.matches[key]
         self.ended[key] = True
+        return results
+
+    def post_results(self, results, key):
+        # TODO: move url to a config file
+        url = "http://localhost:5000/api/internal/finished/{}".format(key)
+        requests.post(url, data=json.dumps(results.to_dict()))
 
     def __start_match(self, key):
-        def cleanup(args):
-            self.cleanup(key)
         match = net_arena.TwistedNLHEArena()
-        match.after_match.addBoth(cleanup)
+        match.after_match.addBoth(self.cleanup, key)
         self.matches[key] = match
         return match
 

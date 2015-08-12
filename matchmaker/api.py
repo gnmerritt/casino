@@ -1,4 +1,4 @@
-from flask import request, jsonify
+from flask import request, jsonify, abort
 from flask.ext.login import login_required, current_user
 
 from matchmaker import app, db
@@ -50,4 +50,11 @@ def player_joined(game_key):
 
 @app.route('/api/internal/finished/<game_key>', methods=['POST'])
 def game_finished(game_key):
-    pass
+    match_results = request.get_json(force=True)
+    if not match_results:
+        abort(404)
+    writer = matches.MatchResultsWriter(game_key)
+    if not writer.valid():
+        abort(404)
+    writer.record(db, match_results)
+    return jsonify({"success": True})

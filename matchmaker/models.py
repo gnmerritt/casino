@@ -143,8 +143,13 @@ class MatchResult(db.Model):
     timestamp = db.Column(db.DateTime, nullable=False)
 
     def __init__(self, match, bot, hands, delta_chips):
-        self.match = match
-        self.bot = bot
+        self.match = match.id
+        self.bot = bot.id
         self.hands = hands
         self.delta_chips = delta_chips
         self.timestamp = datetime.datetime.utcnow()
+
+    def __repr__(self):
+        return "MR<b.id={b} d={d} in {h} hands @ {ts}>" \
+          .format(d=self.delta_chips, h=self.hands, ts=self.timestamp,
+                  b=self.bot)

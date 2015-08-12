@@ -1,4 +1,4 @@
-from models import Match, BotIdentity, Player
+from models import Match, BotIdentity, Player, MatchResult
 from util import serialize
 
 
@@ -60,3 +60,31 @@ class MatchCreatorJob(object):
             match = NewMatch()
             match.create(self.db)
             return match.guid()
+
+
+class MatchResultsWriter(object):
+    def __init__(self, game):
+        self.match = Match.query.filter_by(guid=game).first()
+
+    def valid(self):
+        return self.match and not self.match.finished
+
+    def record(self, db, results):
+        print "about to write results={}".format(results)
+        self.match.finish()
+        db.session.add(self.match)
+        db.session.commit()
+        bots = results.get('bots', [])
+        starting_stack = results.get('starting_stack', 0)
+        hands = results.get('hands', 1)
+
+        for bot in bots:
+            key = bot.get('key', '')
+            bot_id = BotIdentity.query.filter_by(key=key).first()
+            if not bot_id:
+                continue
+            stack = bot.get('stack', 0)
+            results = MatchResult(self.match, bot_id, hands, stack - starting_stack)
+            db.session.add(results)
+
+        db.session.commit()
