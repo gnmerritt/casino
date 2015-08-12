@@ -10,6 +10,7 @@ class User(db.Model):
     username = db.Column(db.String(80))
     email = db.Column(db.String(120))
     registered_on = db.Column(db.DateTime)
+    max_bots = db.Column(db.Integer)
 
     def __init__(self, username, email, external_id):
         self.username = username
@@ -44,6 +45,7 @@ class User(db.Model):
         if email is None or username is None:
             return None
         user = User(username=username, email=email, external_id=external_id)
+        user.max_bots = 1
         user.write()
         return user
 
@@ -130,3 +132,19 @@ class MatchEvent(db.Model):
     def __repr__(self):
         return "Event<{b} did {w} @ {t}>" \
           .format(b=self.bot, w=self.what, t=self.timestamp)
+
+
+class MatchResult(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    match = db.Column(db.Integer, db.ForeignKey("match.id"), nullable=False)
+    bot = db.Column(db.Integer, db.ForeignKey("bot_identity.id"), nullable=False)
+    hands = db.Column(db.Integer, nullable=False)
+    delta_chips = db.Column(db.Integer, nullable=False)
+    timestamp = db.Column(db.DateTime, nullable=False)
+
+    def __init__(self, match, bot, hands, delta_chips):
+        self.match = match
+        self.bot = bot
+        self.hands = hands
+        self.delta_chips = delta_chips
+        self.timestamp = datetime.datetime.utcnow()

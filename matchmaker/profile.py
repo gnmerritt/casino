@@ -13,10 +13,9 @@ class PlayerData(object):
             "user": self.user,
             "bots": self.bots,
             "games": self.games,
+            "canAdd": self.user.max_bots > len(self.bots)
         }
 
-
-BOTS_PER_USER = 1
 
 class BotMaker(object):
     def __init__(self, user, name):
@@ -25,7 +24,7 @@ class BotMaker(object):
 
     def create(self, db):
         data = PlayerData(self.user)
-        if len(data.bots) >= BOTS_PER_USER:
+        if len(data.bots) >= self.user.max_bots:
             raise Exception("Already have too many bots")
         db.session.add(self.bot)
         db.session.commit()

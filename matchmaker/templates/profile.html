@@ -26,6 +26,11 @@
     <h2>First up, create a new bot identity:</h2>
     <p>This will allow you to connect your poker AI to the server and
     play matches.</p>
+  </div>
+  {% endfor %}
+
+  {% if p.canAdd %}
+  <div class="jumbotron">
     <div class="input-group">
       <input type="text" class="form-control" id="botName" placeholder="Enter your bot's name">
       <span class="input-group-btn">
@@ -33,7 +38,7 @@
       </span>
     </div><!-- /input-group -->
   </div>
-  {% endfor %}
+  {% endif %}
 
   <h2>Recent games</h2>
   <ul class="list-group">
