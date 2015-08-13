@@ -41,12 +41,21 @@
   {% endif %}
 
   <h2>Recent games</h2>
-  <ul class="list-group">
-    {% for game in p.games %}
-    <li></li>
+  <table class="table table-striped table-bordered">
+    <tr>
+      <th>Bot</th><th>Game Id</th><th>Date</th><th>Hands</th><th>Win/Loss</th>
+    </tr>
+    {% for g in p.games %}
+    <tr>
+      <td>{{ g.name }}</td>
+      <td>{{ g.guid }}</td>
+      <td>{{ g.ts }}</td>
+      <td>{{ g.hands }}</td>
+      <td class="{%if g.delta_chips > 0%}win{%else%}loss{%endif%}">{{ g.delta_chips }}</td>
+    </tr>
     {% else %}
     <h3>None yet. What are you waiting for, get coding!</h3>
     {% endfor %}
-  </ul>
+  </table>
 
 {% endblock %}
