@@ -153,3 +153,21 @@ class MatchResult(db.Model):
         return "MR<b.id={b} d={d} in {h} hands @ {ts}>" \
           .format(d=self.delta_chips, h=self.hands, ts=self.timestamp,
                   b=self.bot)
+
+
+class BotSkill(db.Model):
+    __tablename__ = "bot_skill"
+    bot = db.Column(db.Integer, db.ForeignKey("bot_identity.id"), nullable=False)
+    date = db.Column(db.Date)
+    skill = db.Column(db.Integer)
+
+    primary_key = db.PrimaryKeyConstraint(bot, date)
+
+    def __init__(self, bot, date, skill):
+        self.bot = bot
+        self.date = date
+        self.skill = skill
+
+    def __repr__(self):
+        return "Skill<{b}->{s} @ {d}>" \
+          .format(d=self.date, b=self.bot, s=self.skill)
