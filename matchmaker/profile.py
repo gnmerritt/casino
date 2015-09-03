@@ -1,19 +1,26 @@
-from models import BotIdentity, MatchResult
+from models import BotIdentity, MatchResult, BotSkill
 from util import serialize
+from matchmaker import db
 
 
 class PlayerData(object):
     def __init__(self, user):
-        self.bots = BotIdentity.query.filter_by(user_id=user.id).all()
+        self.bots = db.session.query(
+            BotIdentity.name, BotIdentity.id, BotIdentity.user_id,
+            BotIdentity.guid, BotIdentity.key, BotSkill.skill) \
+            .join(BotSkill) \
+            .filter(BotIdentity.user_id == user.id) \
+            .all()
         self.user = user
         bot_names = {b.id: b.name for b in self.bots}
         results = MatchResult.query \
-          .filter(MatchResult.bot.in_(bot_names.keys())) \
-          .limit(25).all()
+            .filter(MatchResult.bot.in_(bot_names.keys())) \
+            .limit(25).all()
 
-        self.games = [{ "guid": g.match, "ts": g.timestamp, "delta_chips": g.delta_chips,
-                        "name": bot_names[g.bot], "hands": g.hands }
-                      for g in results]
+        self.games = [{
+            "guid": g.match, "ts": g.timestamp, "delta_chips": g.delta_chips,
+            "name": bot_names[g.bot], "hands": g.hands
+        } for g in results]
 
     def data(self):
         return {
