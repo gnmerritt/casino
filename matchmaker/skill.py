@@ -14,9 +14,12 @@ class SkillUpdater(object):
             ) \
             .group_by(MatchResult.bot) \
             .all()
+        yesterday = today - datetime.timedelta(days=1)
+        yesterdays_skills = {b.bot: b.skill for b in
+                             BotSkill.query.filter_by(date=yesterday).all()}
         BotSkill.query.filter_by(date=today).delete()
         session.bulk_save_objects(
-            [BotSkill(s[0], today, s[1] / s[2])
+            [BotSkill(s[0], today, s[1] / s[2], yesterdays_skills.get(s[0], 0))
              for s in skills]
         )
         session.commit()

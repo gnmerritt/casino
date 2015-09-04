@@ -164,13 +164,15 @@ class BotSkill(db.Model):
         db.Integer, db.ForeignKey("bot_identity.id"), nullable=False)
     date = db.Column(db.Date)
     skill = db.Column(db.Integer)
+    delta = db.Column(db.Integer)
 
     primary_key = db.PrimaryKeyConstraint(bot, date)
 
-    def __init__(self, bot, date, skill):
+    def __init__(self, bot, date, skill, old_skill):
         self.bot = bot
         self.date = date
         self.skill = skill
+        self.delta = skill - old_skill
 
     def __repr__(self):
         return "Skill<{b} -> {s} @ {d}>" \

@@ -4,7 +4,7 @@
 {% block content %}
   <h1>Bot Leaderboard</h1>
 
-  <table class="table table-striped table-bordered">
+  <table class="table table-striped table-bordered text-center">
       <tr>
           <th>Rank</th>
           <th>Bot</th>
@@ -18,8 +18,8 @@
           <td>{{ b.name }}</td>
           <td>{{ b.guid }}</td>
           <td>{{ b.skill }}</td>
-          <td class="{%if b.daily_delta > 0%}win{%else%}loss{%endif%}">
-              {{ b.daily_delta }}
+          <td class="{%if b.delta > 0%}win{%else%}loss{%endif%}">
+              {{ b.delta }}
           </td>
       </tr>
       {% endfor %}
