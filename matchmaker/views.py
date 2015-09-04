@@ -3,6 +3,7 @@ from flask.ext.login import login_required, current_user
 
 from matchmaker import app
 from profile import PlayerData
+from leaderboard import Leaderboard
 
 
 @app.route('/')
@@ -21,4 +22,5 @@ def profile():
 
 @app.route('/leaderboard')
 def leaderboard():
-    return render_template('leaderboard.html')
+    leaderboard = Leaderboard(current_user)
+    return render_template('leaderboard.html', l=leaderboard.data())

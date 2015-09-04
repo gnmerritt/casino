@@ -1,3 +1,5 @@
+import datetime
+
 from models import BotIdentity, MatchResult, BotSkill, BotRank
 from util import serialize
 from matchmaker import db
@@ -5,13 +7,14 @@ from matchmaker import db
 
 class PlayerData(object):
     def __init__(self, user):
+        today = datetime.date.today()
         self.bots = db.session.query(
             BotIdentity.name, BotIdentity.id, BotIdentity.user_id,
             BotIdentity.guid, BotIdentity.key, BotSkill.skill,
             BotRank.rank) \
             .join(BotSkill) \
             .join(BotRank) \
-            .filter(BotIdentity.user_id == user.id) \
+            .filter(BotIdentity.user_id == user.id, BotSkill.date == today) \
             .all()
         self.user = user
         bot_names = {b.id: b.name for b in self.bots}

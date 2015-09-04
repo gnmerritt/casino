@@ -1,8 +1,27 @@
 {% extends "layout.html" %}
 {% block title %}Hold'em leaderboard{% endblock %}
-
+{% block pgClass %}leaderboardPg{% endblock %}
 {% block content %}
-  <h1>Leaderboard</h1>
-  <p class="important">
-    Coming soon!
+  <h1>Bot Leaderboard</h1>
+
+  <table class="table table-striped table-bordered">
+      <tr>
+          <th>Rank</th>
+          <th>Bot</th>
+          <th>GUID</th>
+          <th>Winnings per hand</th>
+          <th>Daily Change</th>
+      </tr>
+      {% for b in l.bots %}
+      <tr class="{% if b.owned %}owned{%endif%}">
+          <td>{{ b.rank }}</td>
+          <td>{{ b.name }}</td>
+          <td>{{ b.guid }}</td>
+          <td>{{ b.skill }}</td>
+          <td class="{%if b.daily_delta > 0%}win{%else%}loss{%endif%}">
+              {{ b.daily_delta }}
+          </td>
+      </tr>
+      {% endfor %}
+  </table>
 {% endblock %}

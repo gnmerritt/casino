@@ -51,7 +51,7 @@
       <td>{{ g.guid }}</td>
       <td>{{ g.ts }}</td>
       <td>{{ g.hands }}</td>
-      <td class="{%if g.delta_chips > 0%}win{%else%}loss{%endif%}">{{ g.delta_chips }}</td>
+      <td class="{%if g.delta_chips >= 0%}win{%else%}loss{%endif%}">{{ g.delta_chips }}</td>
     </tr>
     {% else %}
     <h3>None yet. What are you waiting for, get coding!</h3>
