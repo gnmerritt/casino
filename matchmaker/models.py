@@ -37,7 +37,8 @@ class User(db.Model):
     @classmethod
     def get_or_create(cls, data):
         external_id = data.get('id', None)
-        existing = db.session.query(User).filter_by(external_id=external_id).first()
+        existing = db.session.query(User) \
+            .filter_by(external_id=external_id).first()
         if existing is not None:
             return existing
         email = data.get('email', None)
@@ -108,7 +109,8 @@ class Match(db.Model):
 class Player(db.Model):
     """A player is a bot at a poker table"""
     id = db.Column(db.Integer, primary_key=True)
-    bot = db.Column(db.Integer, db.ForeignKey("bot_identity.id"), nullable=False)
+    bot = db.Column(
+        db.Integer, db.ForeignKey("bot_identity.id"), nullable=False)
     match = db.Column(db.Integer, db.ForeignKey("match.id"), nullable=False)
 
     def __init__(self, bot, match):
@@ -131,13 +133,14 @@ class MatchEvent(db.Model):
 
     def __repr__(self):
         return "Event<{b} did {w} @ {t}>" \
-          .format(b=self.bot, w=self.what, t=self.timestamp)
+            .format(b=self.bot, w=self.what, t=self.timestamp)
 
 
 class MatchResult(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     match = db.Column(db.Integer, db.ForeignKey("match.id"), nullable=False)
-    bot = db.Column(db.Integer, db.ForeignKey("bot_identity.id"), nullable=False)
+    bot = db.Column(
+        db.Integer, db.ForeignKey("bot_identity.id"), nullable=False)
     hands = db.Column(db.Integer, nullable=False)
     delta_chips = db.Column(db.Integer, nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False)
@@ -151,13 +154,14 @@ class MatchResult(db.Model):
 
     def __repr__(self):
         return "MR<b.id={b} d={d} in {h} hands @ {ts}>" \
-          .format(d=self.delta_chips, h=self.hands, ts=self.timestamp,
-                  b=self.bot)
+            .format(d=self.delta_chips, h=self.hands, ts=self.timestamp,
+                    b=self.bot)
 
 
 class BotSkill(db.Model):
     __tablename__ = "bot_skill"
-    bot = db.Column(db.Integer, db.ForeignKey("bot_identity.id"), nullable=False)
+    bot = db.Column(
+        db.Integer, db.ForeignKey("bot_identity.id"), nullable=False)
     date = db.Column(db.Date)
     skill = db.Column(db.Integer)
 
@@ -169,5 +173,20 @@ class BotSkill(db.Model):
         self.skill = skill
 
     def __repr__(self):
-        return "Skill<{b}->{s} @ {d}>" \
-          .format(d=self.date, b=self.bot, s=self.skill)
+        return "Skill<{b} -> {s} @ {d}>" \
+            .format(d=self.date, b=self.bot, s=self.skill)
+
+
+class BotRank(db.Model):
+    __tablename__ = "bot_rank"
+    bot = db.Column(db.Integer, db.ForeignKey("bot_identity.id"),
+                    primary_key=True)
+    rank = db.Column(db.Integer, nullable=False)
+
+    def __init__(self, bot, rank):
+        self.bot = bot
+        self.rank = rank
+
+    def __repr__(self):
+        return "Rank<{b} ranked #{r}>" \
+            .format(b=self.bot, r=self.rank)
