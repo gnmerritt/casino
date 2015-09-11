@@ -7,10 +7,9 @@ import handlers
 class CommandHandler(object):
     CMD = "!"
 
-    fx_login = handlers.LoginHandler()
-
-    def __init__(self, parent):
+    def __init__(self, parent, api_url):
         self.parent = parent
+        self.fx_login = handlers.LoginHandler(api_url)
 
     def handle(self, line):
         """Dispatches to functions for lines starting with !
@@ -34,13 +33,12 @@ class PokerProtocol(basic.LineReceiver):
     def connectionMade(self):
         self.authenticated = False
         self.non_auth_lines = 0
-        self.handler = CommandHandler(self)
+        self.handler = CommandHandler(self, self.factory.api_url)
 
     def connectionLost(self, reason):
         log.msg("Connection lost: {}".format(reason))
 
     def lineReceived(self, line):
-        log.msg("Got line :: {}".format(line))
         self.handler.handle(line)
         if self.authenticated:
             self.factory.bot_said(self, line)

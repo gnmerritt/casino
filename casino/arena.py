@@ -7,7 +7,8 @@ from poker.arena import net_arena
 
 class ArenaHolder(object):
     """Holds handles to running poker matches (arenas)"""
-    def __init__(self):
+    def __init__(self, api_url):
+        self.api_url = api_url
         self.matches = {}
         self.ended = {}
 
@@ -26,8 +27,7 @@ class ArenaHolder(object):
         return results
 
     def post_results(self, results, key):
-        # TODO: move url to a config file
-        url = "http://localhost:5000/api/internal/finished/{}".format(key)
+        url = "{}/api/internal/finished/{}".format(self.api_url, key)
         requests.post(url, data=json.dumps(results.to_dict()))
 
     def __start_match(self, key):

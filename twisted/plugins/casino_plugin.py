@@ -14,6 +14,7 @@ class Options(usage.Options):
         ['port', 'p', 5154, 'The port number to listen on.'],
         ['iface', None, 'localhost', 'The interface to listen on.'],
         ['config', None, 'config.ini', 'Configuration file'],
+        ['api', 'a', 'http://localhost:5000', 'URL of the API server'],
     ]
 
 
@@ -27,10 +28,10 @@ class PokerServiceMaker(object):
     def makeService(self, options):
         top_service = service.MultiService()
 
-        poker_service = PokerService()
+        poker_service = PokerService(options['api'])
         poker_service.setServiceParent(top_service)
 
-        factory = PokerFactory(poker_service)
+        factory = PokerFactory(poker_service, options['api'])
         tcp_service = internet.TCPServer(int(options['port']), factory,
                                          interface=options['iface'])
 

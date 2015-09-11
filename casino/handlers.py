@@ -7,6 +7,9 @@ agent = Agent(reactor)
 
 
 class LoginHandler(object):
+    def __init__(self, api_url):
+        self.api_url = api_url
+
     def handle(self, handler, args):
         game, bot = args
 
@@ -29,9 +32,8 @@ class LoginHandler(object):
             else:
                 failed(response)
 
-        # TODO: move this to a config file
-        url = 'http://localhost:5000/api/internal/join/{}?key={}'\
-              .format(game, bot)
+        url = '{}/api/internal/join/{}?key={}'\
+              .format(self.api_url, game, bot)
         d = agent.request(
             'POST', url,
             Headers({'User-Agent': ['Plumbing Connector']}), None
