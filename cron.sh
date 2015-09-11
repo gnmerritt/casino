@@ -9,3 +9,4 @@ source ~/venvs/casino/bin/activate
 
 date >> $LOG
 python matchmaker/cron/new_matches.py >> $LOG
+python matchmaker/cron/skill_update.py >> $LOG
