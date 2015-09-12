@@ -19,9 +19,9 @@ def open_matches():
     return util.paged_json(open.active(app.config))
 
 
-@app.route('/api/bot/<guid>')
-def get_bot(guid):
-    bot = bots.BotInfo(db, guid).bot
+@app.route('/api/bot/<guid_or_key>')
+def get_bot(guid_or_key):
+    bot = bots.BotInfo(db, guid_or_key).bot
     if not bot:
         abort(404)
     return jsonify({
