@@ -17,12 +17,14 @@ class PlayerData(object):
             .outerjoin(BotSkill) \
             .outerjoin(BotRank) \
             .filter(BotIdentity.user_id == user.id,
+                    # Need to use '== None' for when the join is null
                     or_(BotSkill.date == today, BotSkill.date == None)) \
             .all()
         self.user = user
         bot_names = {b.id: b.name for b in self.bots}
-        results = MatchResult.query \
+        results = [] if not bot_names else MatchResult.query \
             .filter(MatchResult.bot.in_(bot_names.keys())) \
+            .order_by(MatchResult.timestamp.desc()) \
             .limit(25).all()
 
         self.games = [{
