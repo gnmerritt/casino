@@ -1,5 +1,7 @@
 import datetime
 
+from sqlalchemy import or_
+
 from models import BotIdentity, MatchResult, BotSkill, BotRank
 from util import serialize
 from matchmaker import db
@@ -12,9 +14,10 @@ class PlayerData(object):
             BotIdentity.name, BotIdentity.id, BotIdentity.user_id,
             BotIdentity.guid, BotIdentity.key, BotSkill.skill,
             BotRank.rank) \
-            .join(BotSkill) \
-            .join(BotRank) \
-            .filter(BotIdentity.user_id == user.id, BotSkill.date == today) \
+            .outerjoin(BotSkill) \
+            .outerjoin(BotRank) \
+            .filter(BotIdentity.user_id == user.id,
+                    or_(BotSkill.date == today, BotSkill.date == None)) \
             .all()
         self.user = user
         bot_names = {b.id: b.name for b in self.bots}
