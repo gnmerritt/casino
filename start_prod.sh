@@ -10,5 +10,8 @@ source ~/venvs/casino/bin/activate
 export CASINO_SETTINGS=~/deployments/config/casino/${HOSTNAME}.py
 export CASINO_OAUTH=~/deployments/config/casino/oauth.py
 gunicorn matchmaker:app \
+    --reload \
+    --pid webserver.pid \
+    --daemon \
     -b ${HOST_IP}:8000 \
     -w $JOBS
