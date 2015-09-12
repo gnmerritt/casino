@@ -38,6 +38,9 @@ class MatchJoiner(object):
         if self.match is None:
             return 404, "Invalid match key"
         if self.match.players() >= self.MAX_PLAYERS:
+            self.match.active = False
+            db.session.add(self.match)
+            db.session.commit()
             return 410, "Too many players"
 
         if self.match.players() + 1 >= self.MAX_PLAYERS:
@@ -71,7 +74,6 @@ class MatchResultsWriter(object):
 
     def record(self, db, results):
         self.match.finish()
-        self.match.active = False  # just in case
         db.session.add(self.match)
         db.session.commit()
         bots = results.get('bots', [])

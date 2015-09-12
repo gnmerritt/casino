@@ -101,6 +101,7 @@ class Match(db.Model):
 
     def finish(self):
         self.finished = datetime.datetime.utcnow()
+        self.active = False  # just in case
 
     def players(self):
         return Player.query.filter_by(match=self.id).count()
