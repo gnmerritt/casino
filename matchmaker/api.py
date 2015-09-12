@@ -1,6 +1,7 @@
 from flask import request, jsonify, abort
 from flask.ext.login import login_required, current_user
 
+import bots
 from matchmaker import app, db
 import matches
 import util
@@ -18,12 +19,23 @@ def open_matches():
     return util.paged_json(open.active(app.config))
 
 
-@app.route('/api/bots/<name>', methods=['POST'])
+@app.route('/api/bot/<guid>')
+def get_bot(guid):
+    bot = bots.BotInfo(db, guid).bot
+    if not bot:
+        abort(404)
+    return jsonify({
+        "success": True,
+        "bot": bot,
+    })
+
+
+@app.route('/api/bot/<name>', methods=['POST'])
 @login_required
 def new_bot(name):
     creator = profile.BotMaker(current_user, name)
     bot = creator.create(db)
-    return jsonify(**{
+    return jsonify({
         "success": True,
         "bot": bot,
     })
