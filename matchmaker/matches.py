@@ -26,7 +26,7 @@ class NewMatch(object):
 
 
 class MatchJoiner(object):
-    MAX_PLAYERS = 2 # hardcoded for meow
+    MAX_PLAYERS = 2  # hardcoded for meow
 
     def __init__(self, game, bot):
         self.match = Match.query.filter_by(guid=game).first()
@@ -70,8 +70,8 @@ class MatchResultsWriter(object):
         return self.match and not self.match.finished
 
     def record(self, db, results):
-        print "about to write results={}".format(results)
         self.match.finish()
+        self.match.active = False  # just in case
         db.session.add(self.match)
         db.session.commit()
         bots = results.get('bots', [])
@@ -84,7 +84,8 @@ class MatchResultsWriter(object):
             if not bot_id:
                 continue
             stack = bot.get('stack', 0)
-            results = MatchResult(self.match, bot_id, hands, stack - starting_stack)
+            delta = stack - starting_stack
+            results = MatchResult(self.match, bot_id, hands, delta)
             db.session.add(results)
 
         db.session.commit()
