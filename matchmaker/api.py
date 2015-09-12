@@ -7,15 +7,16 @@ import util
 import profile
 
 
-##
-## Public API
-##
+#
+#  Public API
+#
 
 @app.route('/api/matches')
 @login_required
 def open_matches():
     open = matches.OpenMatches(db)
     return util.paged_json(open.active(app.config))
+
 
 @app.route('/api/bots/<name>', methods=['POST'])
 @login_required
@@ -27,9 +28,10 @@ def new_bot(name):
         "bot": bot,
     })
 
-##
-## Internal API
-##
+#
+# Internal API
+#
+
 
 @app.route('/api/internal/new_match', methods=['POST'])
 def new_match():
@@ -39,6 +41,7 @@ def new_match():
         "key": maker.guid(),
         "success": True,
     })
+
 
 @app.route('/api/internal/join/<game_key>', methods=['POST'])
 def player_joined(game_key):
@@ -57,4 +60,6 @@ def game_finished(game_key):
     if not writer.valid():
         abort(404)
     writer.record(db, match_results)
+    new_match = matches.MatchCreatorJob(db)
+    new_match.run()
     return jsonify({"success": True})
