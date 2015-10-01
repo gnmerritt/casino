@@ -17,6 +17,7 @@ class Leaderboard(object):
             .join(BotSkill) \
             .join(BotRank) \
             .filter(BotSkill.date == datetime.date.today()) \
+            .order_by(BotRank.rank.asc()) \
             .limit(50) \
             .all()
 
