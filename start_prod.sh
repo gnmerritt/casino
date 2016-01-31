@@ -13,5 +13,7 @@ gunicorn matchmaker:app \
     --reload \
     --pid webserver.pid \
     --daemon \
+    --error-logfile logs/matchmaker-errors.log \
+    --log-file logs/matchmaker.log \
     -b ${HOST_IP}:8000 \
     -w $JOBS
