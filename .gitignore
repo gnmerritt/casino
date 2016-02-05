@@ -65,3 +65,5 @@ twisted/plugins/dropin.cache
 node_modules/
 bower_components/
 matchmaker/static/
+
+logs/*
