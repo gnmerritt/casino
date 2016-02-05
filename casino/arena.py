@@ -7,8 +7,9 @@ from poker.arena import net_arena
 
 class ArenaHolder(object):
     """Holds handles to running poker matches (arenas)"""
-    def __init__(self, api_url):
+    def __init__(self, api_url, log_dir):
         self.api_url = api_url
+        self.log_dir = log_dir
         self.matches = {}
         self.ended = {}
 
@@ -32,6 +33,8 @@ class ArenaHolder(object):
 
     def __start_match(self, key):
         match = net_arena.TwistedNLHEArena()
+        match.output_directory = self.log_dir
+        match.key = key
         match.after_match.addBoth(self.cleanup, key)
         self.matches[key] = match
         return match
