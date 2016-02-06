@@ -1,10 +1,13 @@
 language: python
 python:
-  - "2.7"
+- '2.7'
 before_install:
-  - "pip install codecov"
+- pip install codecov
 install:
-  - "pip install -r requirements.txt"
+- pip install -r requirements.txt
 script: nosetests --with-coverage casino/ matchmaker/
 after_success:
-  - "codecov"
+- codecov
+notifications:
+  slack:
+    secure: lNNYvdiybAOB3EOlJBLEaL/U7xzAT9w0LJj+wIRCa6gL+k3YxNI2qs2e0uOPGO1THJ+T2Bq/FhXqcYBQOSz/WVDRSzyx112uPVbmKw/F3X4ofM9+IBcC5tqX2sw+jw8Be2Zxy8e92CudvvjJjXdPIXHYV9j7D+SooDgwtBRcEoTOIjpmaEB3YONViMwsnAQTrH41nmLp6i8uj+9LOzxAmpiJgfig/B/9zIOGRtpsaWzgNVflnhbxT2N5cyn4XI4242274SDSOrbQlotHlesGji5Oye7tTtsTZXVUFRr1TjWP4opYgmYqF1yzvpSsfDrCkFyDlGWNrylm5CdAnEFOoecZ9vYEZ8Zb9ohsavy7ALpxlyKmxzpc7jyknXZS+56RTrktL4phbDrEtDpQO9uKuKgFoEdaF7wj6TGIpFSabq9Jk1yf5HU+b5fU6fCxVLAeJpnEP2EVbPI9gQuOUiCBhytOOfUwGzO/c6XmFNpI1SQde8HnZtnbbDf77sEu0jsRHzxrHlrO/Q4GmcIxJzdP7sR835hr7unLTgFi5WR7Cqchejoup+IlNGBCl69+/uMZ2ne3B2hbwmk+MHkWaijVEco6CeIStSQ2sluK1y7z0Dt7v+jS7myxWg1gslIOyFD2kRKEAxcd9GiI3+VQOyHixqTsUvy8yi85IackBDid+bM=
