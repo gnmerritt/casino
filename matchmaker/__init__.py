@@ -7,7 +7,7 @@ app = Flask(__name__, static_folder='static')
 app.config.from_object('matchmaker.default_settings')
 app.config.from_envvar('CASINO_SETTINGS', silent=True)
 
-if not app.debug or True:
+if not app.debug:
     handler = slh.SlackerLogHandler(
         app.config['SLACK_API_KEY'],
         app.config['SLACK_CHANNEL'],
