@@ -10,3 +10,4 @@ pyOpenSSL
 service_identity
 psycopg2
 requests
+slacker-log-handler

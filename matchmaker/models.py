@@ -1,7 +1,7 @@
 import uuid
 import datetime
 
-from matchmaker import db
+from matchmaker import db, app
 
 
 class User(db.Model):
@@ -45,6 +45,7 @@ class User(db.Model):
         username = data.get('login', None)
         if email is None or username is None:
             return None
+        app.logger.info("A new user '{}' just joined".format(username))
         user = User(username=username, email=email, external_id=external_id)
         user.max_bots = 1
         user.write()

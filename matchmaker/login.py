@@ -55,6 +55,7 @@ def authorized():
         me.data['email'] = email
     user = User.get_or_create(me.data)
     if not user:
+        app.logger.error("Could not log in user, something is broken")
         return 'Something went boom: could not get username or email from GitHub'
     login_user(user)
     return redirect(url_for('profile', _external=True,
