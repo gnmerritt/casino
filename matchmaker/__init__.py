@@ -15,6 +15,7 @@ if not app.debug or True:
     )
     handler.setLevel(logging.INFO)
     app.logger.addHandler(handler)
+    app.logger.info("Casino Matchmaker webapp restarted")
 
 db = SQLAlchemy(app)
 

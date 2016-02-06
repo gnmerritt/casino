@@ -10,15 +10,18 @@ from leaderboard import Leaderboard
 def index():
     return render_template('index.html')
 
+
 @app.route('/robots.txt')
 def static_from_route():
     return send_from_directory(app.static_folder, request.path[1:])
+
 
 @app.route('/profile')
 @login_required
 def profile():
     player = PlayerData(current_user)
     return render_template('profile.html', p=player.data())
+
 
 @app.route('/leaderboard')
 def leaderboard():
