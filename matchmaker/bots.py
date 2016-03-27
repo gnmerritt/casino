@@ -16,3 +16,5 @@ class BotInfo(object):
         if db_bot:
             keys = ["name", "user_id", "guid", "skill", "rank"]
             self.bot = {keys[i]: val for i, val in enumerate(db_bot)}
+        else:
+            self.bot = {}
