@@ -6,3 +6,4 @@ CASINO_PORT = 5154
 SLACK_API_KEY = "not-in-dev"
 SLACK_CHANNEL = "#casino"
 SLACK_USERNAME = "CasinoLogs"
+MATCH_LOGS = "/Users/nathan/sources/casino/logs/matches/"
