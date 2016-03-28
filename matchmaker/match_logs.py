@@ -1,4 +1,4 @@
-from display import DisplayBot
+from display import DisplayBot, DisplayResults
 from models import Match, Player, MatchResult
 from util import serialize
 
@@ -9,7 +9,8 @@ class MatchLogBuilder(object):
         self.match = Match.query.get(match_id)
         self.players = [DisplayBot(p.bot).json()
                         for p in Player.query.filter_by(match=match_id).all()]
-        self.results = MatchResult.query.filter_by(match=match_id).all()
+        self.results = DisplayResults(
+            MatchResult.query.filter_by(match=match_id).all())
 
     def valid(self):
         print("valid? match={}".format(self.match))
@@ -19,6 +20,6 @@ class MatchLogBuilder(object):
         return {
             "players": self.players,
             "match": serialize(self.match),
-            "results": [serialize(r) for r in self.results],
+            "results": self.results.json(),
             "logs": None
         }

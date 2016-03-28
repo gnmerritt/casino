@@ -14,3 +14,12 @@ class DisplayBot(object):
             "bot": serialize(self.bot, scrub=["key"]),
             "rank": self.rank
         }
+
+
+class DisplayResults(object):
+    def __init__(self, results):
+        self.results = results
+
+    def json(self):
+        return {r.bot: serialize(r, scrub=["bot", "id"])
+                for r in self.results}
