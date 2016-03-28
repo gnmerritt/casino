@@ -4,6 +4,7 @@ from flask.ext.login import login_required, current_user
 import bots
 from matchmaker import app, db
 import matches
+import match_logs
 import util
 import profile
 
@@ -17,6 +18,16 @@ import profile
 def open_matches():
     open = matches.OpenMatches(db)
     return util.paged_json(open.active(app.config))
+
+
+@app.route('/api/matches/<match_id>')
+@login_required
+def get_match_logs(match_id):
+    streamer = match_logs.MatchLogBuilder(match_id)
+    if not streamer.valid():
+        print("Not valid, 404-ing")
+        abort(404)
+    return jsonify(streamer.data())
 
 
 @app.route('/api/bot/<guid_or_key>')

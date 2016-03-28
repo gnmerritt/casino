@@ -107,6 +107,10 @@ class Match(db.Model):
     def players(self):
         return Player.query.filter_by(match=self.id).count()
 
+    def __repr__(self):
+        return "Match<id={id}, start={s}, finish={f}, active? {a}>" \
+            .format(id=self.id, s=self.started, f=self.finished, a=self.active)
+
 
 class Player(db.Model):
     """A player is a bot at a poker table"""
