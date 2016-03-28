@@ -1,3 +1,4 @@
+from matchmaker import app
 import datetime
 
 from sqlalchemy import or_
@@ -50,6 +51,8 @@ class BotMaker(object):
         data = PlayerData(self.user)
         if len(data.bots) >= self.user.max_bots:
             raise Exception("Already have too many bots")
+        app.logger.error("{} just created a new bot named {}"
+                         .format(self.user.username, self.bot.name))
         db.session.add(self.bot)
         db.session.commit()
         return serialize(self.bot)
