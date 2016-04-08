@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %} bot page! {% endblock %}
+{% block title %}{{ b.bot.name }}'s bot info page{% endblock %}
 
 {% block content %}
 
@@ -12,7 +12,10 @@
   <div class="panel-body">
     <table class="table table-striped table-bordered">
       <tr><td>Owner</td><td>{{ b.owner }}</td></tr>
-      <tr><td>GUID</td><td>{{ b.bot.guid }}</td></tr>
+      <tr>
+        <td>GUID</td>
+        <td><a href="{{ url_for('bot_page', bot_id_guid=b.bot.guid) }}">{{ b.bot.guid }}</a></td>
+      </tr>
       <tr><td>Rank</td><td>{{ b.rank }} of {{ b.bots }}</td></tr>
       <tr><td>Winnings per hand</td><td class="{%if b.skill > 0%}win{%else%}loss{%endif%}">{{ b.skill }}</td></tr>
     </table>
