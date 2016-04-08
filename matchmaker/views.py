@@ -3,6 +3,7 @@ from flask.ext.login import login_required, current_user
 
 from matchmaker import app
 from profile import PlayerData
+from bot_page import BotData
 from leaderboard import Leaderboard
 
 
@@ -21,6 +22,12 @@ def static_from_route():
 def profile():
     player = PlayerData(current_user)
     return render_template('profile.html', p=player.data())
+
+
+@app.route('/bot/<bot_id>')
+def bot_page(bot_id):
+    bot_data = BotData(bot_id)
+    return render_template('bot.html', b=bot_data.data())
 
 
 @app.route('/leaderboard')

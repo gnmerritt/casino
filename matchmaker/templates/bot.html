@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block title %} bot page! {% endblock %}
+
+{% block content %}
+
+<h2>Bot info</h2>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{ b.bot.name }}</h3>
+  </div>
+  <div class="panel-body">
+    <table class="table table-striped table-bordered">
+      <tr><td>Owner</td><td>{{ b.owner }}</td></tr>
+      <tr><td>GUID</td><td>{{ b.bot.guid }}</td></tr>
+      <tr><td>Rank</td><td>{{ b.rank }} of {{ b.bots }}</td></tr>
+      <tr><td>Winnings per hand</td><td class="{%if b.skill > 0%}win{%else%}loss{%endif%}">{{ b.skill }}</td></tr>
+    </table>
+  </div> <!-- /panel-body -->
+</div>
+
+<h2>Recent games</h2>
+
+<table class="table table-striped table-bordered">
+  <tr>
+    <th>Bot</th><th>Game Id</th><th>Date</th><th>Hands</th><th>Win/Loss</th>
+  </tr>
+  {% for g in b.games %}
+  <tr>
+    <td>{{ g.name }}</td>
+    <td>{{ g.guid }}</td>
+    <td>{{ g.ts }}</td>
+    <td>{{ g.hands }}</td>
+    <td class="{%if g.delta_chips >= 0%}win{%else%}loss{%endif%}">{{ g.delta_chips }}</td>
+  </tr>
+  {% else %}
+  <h3>None yet :-(</h3>
+  {% endfor %}
+</table>
+
+
+{% endblock %}
