@@ -171,18 +171,20 @@ class BotSkill(db.Model):
     date = db.Column(db.Date)
     skill = db.Column(db.Integer)
     delta = db.Column(db.Integer)
+    games = db.Column(db.Integer)
 
     primary_key = db.PrimaryKeyConstraint(bot, date)
 
-    def __init__(self, bot, date, skill, old_skill):
+    def __init__(self, bot, date, skill, old_skill, games):
         self.bot = bot
         self.date = date
         self.skill = skill
         self.delta = skill - old_skill
+        self.games = games
 
     def __repr__(self):
-        return "Skill<{b} -> {s} @ {d}>" \
-            .format(d=self.date, b=self.bot, s=self.skill)
+        return "Skill<{b} -> {s} @ {d} in {g}>" \
+            .format(d=self.date, b=self.bot, s=self.skill, g=self.games)
 
 
 class BotRank(db.Model):

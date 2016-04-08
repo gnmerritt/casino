@@ -9,6 +9,7 @@
           <th>Rank</th>
           <th>Bot</th>
           <th>GUID</th>
+          <th>Games</th>
           <th>Winnings per hand</th>
           <th>Daily Change</th>
       </tr>
@@ -17,6 +18,7 @@
           <td>{{ b.rank }}</td>
           <td>{{ b.name }}</td>
           <td><a href="{{ url_for('bot_page', bot_id_guid=b.guid) }}">{{ b.guid }}</a></td>
+          <td>{{ b.games }}</td>
           <td>{{ b.skill }}</td>
           <td class="{%if b.delta > 0%}win{%else%}loss{%endif%}">
               {{ b.delta }}

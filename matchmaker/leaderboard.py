@@ -13,6 +13,7 @@ class Leaderboard(object):
         self.bots = db.session.query(
             BotIdentity.name, BotIdentity.guid,
             BotSkill.skill, BotSkill.delta, BotRank.rank,
+            BotSkill.games,
             owned_exp.label("owned")
             ) \
             .join(BotSkill) \

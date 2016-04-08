@@ -11,6 +11,7 @@ class SkillUpdater(object):
             BotIdentity.id,
             func.coalesce(func.sum(MatchResult.delta_chips), 0),
             func.coalesce(func.sum(MatchResult.hands), 0),
+            func.coalesce(func.count(MatchResult.id), 0),
             ) \
             .outerjoin(MatchResult) \
             .group_by(BotIdentity.id) \
@@ -22,7 +23,8 @@ class SkillUpdater(object):
         session.bulk_save_objects(
             [BotSkill(s[0], today,
                       self.calc_winnings_per_hand(s[1], s[2]),
-                      yesterdays_skills.get(s[0], 0))
+                      yesterdays_skills.get(s[0], 0),
+                      s[3])
              for s in skills]
         )
         session.commit()
