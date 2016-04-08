@@ -34,3 +34,8 @@ def bot_page(bot_id_guid):
 def leaderboard():
     leaderboard = Leaderboard(current_user)
     return render_template('leaderboard.html', l=leaderboard.data())
+
+
+@app.route('/replay')
+def replay():
+    return render_template('replay.html')

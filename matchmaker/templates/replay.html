@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block title %}Match replayer{% endblock %}
+
+{% block content %}
+<h2>replay app here:</h2>
+<div id="replay-app"></div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  require('matchmaker/webapp/js/react/replay.jsx');
+</script>
+{% endblock %}}
