@@ -1,11 +1,20 @@
 from flask import abort
 
+from matchmaker import db
 from models import User, BotIdentity, MatchResult, BotSkill, BotRank
 
 
 class BotData(object):
     def __init__(self, bot_id):
-        self.bot = BotIdentity.query.get(bot_id)
+        self.bot = None
+        try:
+            self.bot = BotIdentity.query.get(bot_id)
+        except:
+            db.session.rollback()
+        if not self.bot:
+            self.bot = BotIdentity.query \
+                .filter(BotIdentity.guid == bot_id) \
+                .first()
         if not self.bot:
             abort(404)
         self.owner = User.query.get(self.bot.user_id)

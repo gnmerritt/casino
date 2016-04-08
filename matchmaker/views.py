@@ -24,9 +24,9 @@ def profile():
     return render_template('profile.html', p=player.data())
 
 
-@app.route('/bot/<bot_id>')
-def bot_page(bot_id):
-    bot_data = BotData(bot_id)
+@app.route('/bot/<bot_id_guid>')
+def bot_page(bot_id_guid):
+    bot_data = BotData(bot_id_guid)
     return render_template('bot.html', b=bot_data.data())
 
 
