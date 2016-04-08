@@ -1,10 +1,23 @@
 digraph poker {
-  bot_1 -> casino;
-  casino -> bot_1;
-  bot_2 -> casino;
-  casino -> bot_2;
+  subgraph cluster_local {
+    "poker-plumbing" -> "your bot" [ style="dotted", label="std in/out" ];
+    "your bot" -> "poker-plumbing" [ style="dotted" ];
+    label = "your computer";
+    style = "dotted";
+  }
 
-  casino -> stats;
-  casino -> rankings;
-  casino -> logs;
+  "other bots" -> casino;
+
+  subgraph cluster_casino {
+    casino -> logs;
+    casino -> leaderboard;
+    label = "poker api";
+    color="#ff9800";
+  }
+  "poker-plumbing" -> casino [ label="http/tcp" ];
+  casino -> "poker-plumbing";
+
+  "your bot" [ shape=triangle ];
+  "other bots" [ shape=triangle ];
+  casino [ shape=box ];
 }
