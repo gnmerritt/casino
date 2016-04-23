@@ -14,6 +14,21 @@ class OpenMatches(object):
         return [serialize(m, extras=connection_info) for m in self.matches]
 
 
+class FinishedMatches(object):
+    def __init__(self, db, offset=0):
+        self.db = db
+        self.offset = offset
+
+    def finished(self, user):
+        matches = Match.query.filter(Match.finished.isnot(None)) \
+            .order_by(Match.finished.desc()) \
+            .offset(self.offset) \
+            .limit(25) \
+            .all()
+        pagination = {'offset': self.offset, 'limit': 25}
+        return pagination, [serialize(m) for m in matches]
+
+
 class NewMatch(object):
     def create(self, db, active=True):
         self.match = Match()

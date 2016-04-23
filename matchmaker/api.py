@@ -20,12 +20,20 @@ def open_matches():
     return util.paged_json(open.active(app.config))
 
 
+@app.route('/api/matches/finished')
+@login_required
+def finished_matches():
+    offset = request.args.get('offset', type=int, default=0)
+    finished = matches.FinishedMatches(db, offset)
+    pagination, hits = finished.finished(current_user)
+    return util.paged_json(hits, pagination)
+
+
 @app.route('/api/matches/<match_id>')
 @login_required
 def get_match_logs(match_id):
     streamer = match_logs.MatchLogBuilder(match_id)
     if not streamer.valid():
-        print("Not valid, 404-ing")
         abort(404)
     return jsonify(streamer.data())
 
