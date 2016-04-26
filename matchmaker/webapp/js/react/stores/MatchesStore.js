@@ -21,7 +21,7 @@ const MatchesStore = Reflux.createStore({
     $.getJSON('/api/matches/finished', (pagedResp) => {
       this.state.info = pagedResp.data;
       this.trigger(this.state);
-      MatchActions.fetchMatches.complete();
+      MatchActions.fetchMatches.completed();
     });
   },
 });

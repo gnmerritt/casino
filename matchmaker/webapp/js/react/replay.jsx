@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import MatchSelector from './components/MatchSelector';
+import MatchControls from './components/MatchControls';
+import MatchWindow from './components/MatchWindow';
 
 function ReplayApp() {
   return (
     <div>
-      <div>Hello, react (with selector)?</div>
-      <MatchSelector />
+      <MatchControls />
+      <MatchWindow />
     </div>
   );
 }
