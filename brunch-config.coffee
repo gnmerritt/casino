@@ -3,7 +3,7 @@ exports.config =
     enabled: true
   plugins:
     babel:
-      presets: ['es2015', 'react', 'stage-0']
+      presets: ['es2015', 'es2016', 'react', 'stage-0']
       pattern: /\.(js|es6|jsx)$/
   paths:
     public: 'matchmaker/static/'

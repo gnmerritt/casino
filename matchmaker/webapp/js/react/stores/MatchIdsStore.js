@@ -3,7 +3,7 @@ import Reflux from 'reflux';
 
 import MatchActions from '../actions/MatchActions';
 
-const MatchesStore = Reflux.createStore({
+const MatchIdsStore = Reflux.createStore({
   listenables: [MatchActions],
   state: {
     info: ['Loading...'],
@@ -26,4 +26,4 @@ const MatchesStore = Reflux.createStore({
   },
 });
 
-export default MatchesStore;
+export default MatchIdsStore;

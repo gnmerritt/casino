@@ -8,6 +8,7 @@ from util import serialize
 
 LOGS_FOLDER = app.config['MATCH_LOGS']
 
+
 class MatchLogBuilder(object):
     def __init__(self, match_id):
         self.match = Match.query.get(match_id)

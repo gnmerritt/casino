@@ -2,9 +2,13 @@ import React from 'react';
 import Reflux from 'reflux';
 
 import ReplayStore from '../stores/ReplayStore';
+import ActiveMatchStore from '../stores/ActiveMatchStore';
 
 const MatchWindow = React.createClass({
-  mixins: [Reflux.connect(ReplayStore, 'replay')],
+  mixins: [
+    Reflux.connect(ReplayStore, 'replay'),
+    Reflux.connect(ActiveMatchStore, 'match'),
+  ],
 
   render() {
     return (

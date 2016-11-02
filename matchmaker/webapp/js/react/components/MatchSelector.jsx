@@ -2,11 +2,11 @@ import React from 'react';
 import Reflux from 'reflux';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 
-import MatchesStore from '../stores/MatchesStore';
+import MatchIdsStore from '../stores/MatchIdsStore';
 import ReplayActions from '../actions/ReplayActions';
 
 const MatchSelector = React.createClass({
-  mixins: [Reflux.connect(MatchesStore, 'matches')],
+  mixins: [Reflux.connect(MatchIdsStore, 'matches')],
 
   onSelect(event, index) {
     ReplayActions.selectMatch(this.state.matches.info[index]);
@@ -14,7 +14,9 @@ const MatchSelector = React.createClass({
 
   renderOption(matchInfo, i) {
     return (
-      <MenuItem key={i} eventKey={i}>{matchInfo.guid}</MenuItem>
+      <MenuItem key={i} eventKey={i}>
+        {matchInfo.finished} - {matchInfo.guid}
+      </MenuItem>
     );
   },
 
