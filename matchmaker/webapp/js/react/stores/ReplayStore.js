@@ -40,7 +40,7 @@ const ReplayStore = Reflux.createStore({
   },
 
   onNextHand() {
-    this.state.handNumber = this.state.handNumber + 1;
+    this.state.handNumber = Math.min(this.state.hands.length, this.state.handNumber + 1);
     this.newHand();
     this.trigger(this.state);
   },
@@ -58,6 +58,9 @@ const ReplayStore = Reflux.createStore({
   },
 
   newPhase() {
+    if (!this.state.currentHand) {
+      return;
+    }
     this.state.currentPhase = this.state.currentHand.actions[this.state.handPhase];
   },
 
