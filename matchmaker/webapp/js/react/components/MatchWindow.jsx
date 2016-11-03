@@ -5,6 +5,8 @@ import ReplayStore from '../stores/ReplayStore';
 import ActiveMatchStore from '../stores/ActiveMatchStore';
 import ActiveHandStore from '../stores/ActiveHandStore';
 
+import Player from './Player';
+
 const MatchWindow = React.createClass({
   mixins: [
     Reflux.connect(ReplayStore, 'replay'),
@@ -23,6 +25,11 @@ const MatchWindow = React.createClass({
           <li>match: {this.state.replay.match.guid}</li>
         </ul>
         <div>Current: {this.state.currentPhase}</div>
+
+        <div>
+          <h2>Players</h2>
+          {this.state.hand.players.map(p => <Player name={p} key={p} />)}
+        </div>
       </div>
     );
   },
