@@ -2,10 +2,9 @@ import Reflux from 'reflux';
 
 const ReplayActions = Reflux.createActions([
   'selectMatch',
-  'togglePlaying',
+  'advancePhase',
   'nextHand',
   'previousHand',
-  'setSpeed',
 ]);
 
 export default ReplayActions;
