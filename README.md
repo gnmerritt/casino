@@ -3,3 +3,7 @@
 # Casino
 
 Let your robot play poker so it doesn't get bored
+
+## architecture
+
+![architecture](casino-outline.jpg)
